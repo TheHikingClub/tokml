@@ -111,6 +111,10 @@ function description(_, options) {
     return _[options.description] ? tag('description', encode(_[options.description])) : '';
 }
 
+function styleUrl(_, options) {
+    return _['styleUrl'] ? tag('styleUrl', encode(_[options.styleUrl])) : '';
+}
+
 function timestamp(_, options) {
     return _[options.timestamp] ? tag('TimeStamp', tag('when', encode(_[options.timestamp]))) : '';
 }
