@@ -11,6 +11,7 @@ module.exports = function tokml(geojson, options) {
         name: 'name',
         description: 'description',
         simplestyle: false,
+        organicMapsStyle: false,
         timestamp: 'timestamp'
     };
 
@@ -49,6 +50,19 @@ function feature(options, styleHashesArray) {
                     styleReference = tag('styleUrl', '#' + styleHash);
                 }
                 // Note that style of GeometryCollection / MultiGeometry is not supported
+            }
+        }
+        
+        if (options.organicMapsStyle) {
+            var styleHash = hashStyle(_.properties);
+            if (styleHash) {
+                if (geometry.isPoint(_.geometry) && hasOrganicMapsStyle(_.properties)) {
+                    if (styleHashesArray.indexOf(styleHash) === -1) {
+                        styleDefinition = organicMapsMarkerStyle(_.properties, styleHash);
+                        styleHashesArray.push(styleHash);
+                    }
+                    styleReference = tag('styleUrl', '#' + styleHash);
+                }
             }
         }
         
@@ -188,11 +202,23 @@ function hasMarkerStyle(_) {
     return !!(_['marker-size'] || _['marker-symbol'] || _['marker-color']);
 }
 
+function hasOrganicMapsStyle(_) {
+    return !!(_['organicmaps-marker-color']);
+}
+
 function markerStyle(_, styleHash) {
     return tag('Style',
         tag('IconStyle',
             tag('Icon',
                 tag('href', iconUrl(_)))) +
+        iconSize(_), [['id', styleHash]]);
+}
+
+function organicMapsMarkerStyle(_, styleHash) {
+    return tag('Style',
+        tag('IconStyle',
+            tag('Icon',
+                tag('href', organicMapsIconUrl(_)))) +
         iconSize(_), [['id', styleHash]]);
 }
 
@@ -203,6 +229,12 @@ function iconUrl(_) {
 
     return 'https://api.tiles.mapbox.com/v3/marker/' + 'pin-' + size.charAt(0) +
         symbol + '+' + color + '.png';
+}
+
+function organicMapsIconUrl(_) {
+    var color = (_['organicmaps-marker-color'] || 'red');
+
+    return 'https://omaps.app/placemarks/placemark-' + color + '.png';
 }
 
 function iconSize(_) {
@@ -256,6 +288,7 @@ function hashStyle(_) {
     if (_['stroke-opacity']) hash = hash + 'mo' + _['stroke-opacity'].toString().replace('.', '');
     if (_['fill']) hash = hash + 'f' + _['fill'].replace('#', '');
     if (_['fill-opacity']) hash = hash + 'fo' + _['fill-opacity'].toString().replace('.', '');
+    if (_['organicmaps-marker-color']) hash = hash + _['organicmaps-marker-color'];
     
     return hash;
 }

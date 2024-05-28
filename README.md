@@ -76,6 +76,26 @@ for the full document.
 
 * `simplestyle`: set to `true` to convert simplestyle-spec styles into KML styles
 
+**Organic Map** style:
+
+*  `organicMapsStyle`: set to `true` to use Organic Map styles. Use the `organicmaps-marker-color` property. Valid values:
+ - red
+ - blue
+ - purple
+ - yellow
+ - pink
+ - brown
+ - green
+ - orange
+ - deeppurple
+ - lightblue
+ - cyan
+ - teal
+ - lime
+ - deeporange
+ - gray
+ - bluegray
+
 ## Development
 
 Requires [node.js](http://nodejs.org/) and [browserify](https://github.com/substack/node-browserify):
