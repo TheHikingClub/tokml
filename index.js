@@ -286,7 +286,7 @@ function hashStyle(_) {
     if (_['stroke-opacity']) hash = hash + 'mo' + _['stroke-opacity'].toString().replace('.', '');
     if (_['fill']) hash = hash + 'f' + _['fill'].replace('#', '');
     if (_['fill-opacity']) hash = hash + 'fo' + _['fill-opacity'].toString().replace('.', '');
-    if (_['organicmaps-marker-color']) hash = hash + _['organicmaps-marker-color'];
+    if (_['organicmaps-marker-color']) hash = hash + 'placemark-' + _['organicmaps-marker-color'];
     
     return hash;
 }
