@@ -188,7 +188,7 @@ function linearring(_) {
 
 // ## Data
 function extendeddata(_) {
-    return tag('ExtendedData xmlns:mwm=\'https://omaps.app\'', tag('mwm:icon','None'), pairs(_).map(data).join(''));
+    return tag('ExtendedData xmlns:mwm=\'https://omaps.app\'', tag('mwm:icon','None'));//, pairs(_).map(data).join(''));
 }
 
 function data(_) {
