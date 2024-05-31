@@ -67,7 +67,7 @@ function feature(options, styleHashesArray) {
         return styleDefinition + tag('Placemark',
             name(_.properties, options) +
             description(_.properties, options) +
-            newExtendedData(_.properties) +
+            extendeddata(_.properties, options) +
             timestamp(_.properties, options) +
             geometryString +
             styleReference);
@@ -187,12 +187,12 @@ function linearring(_) {
 }
 
 // ## Data
-function newExtendedData() {
-    return "<ExtendedData xmlns:mwm='https://omaps.app'><mwm:icon>None</mwm:icon></ExtendedData>";
-}
-
-function extendeddata(_) {
-    return tag('ExtendedData', pairs(_).map(data).join(''));
+function extendeddata(_, options) {
+    if(options.organicMapsStyle)
+        return `<ExtendedData xmlns:mwm='https://omaps.app'><mwm:icon>${_['organicmaps-icon'] || 'None'}</mwm:icon></ExtendedData>`;
+        
+    else 
+        return tag('ExtendedData', pairs(_).map(data).join(''));
 }
 
 function data(_) {

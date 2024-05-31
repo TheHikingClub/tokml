@@ -78,7 +78,7 @@ for the full document.
 
 **Organic Map** style:
 
-*  `organicMapsStyle`: set to `true` to use Organic Map styles. Use the `organicmaps-marker-color` property. Valid values:
+*  `organicMapsStyle`: set to `true` to use Organic Map styles. Use the `organicmaps-marker-color`and `organiorganicmaps-icon` properties. Valid values:
  - red
  - blue
  - purple
